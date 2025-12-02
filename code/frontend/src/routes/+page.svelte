@@ -1,41 +1,42 @@
 <script lang="ts">
-    
-    var tasks:any = [
-        {"id":1,"name":"labor1","description":"test1"},
-        {"id":2,"name":"labor2","description":"test2"},
-        {"id":3,"name":"labor3","description":"test3"},
-    ];
-    var user_in:string;
+	import { Tabs } from '@skeletonlabs/skeleton-svelte';
+	import { Progress } from '@skeletonlabs/skeleton-svelte';
+
+    let new_task = "";
+    let tasks:any = [
+        {"id":1,"name":"labor","content":"clean your house","prog":74},
+        {"id":2,"name":"wash the dishes","content":"clean your sink","prog":45},
+
+        ];
 </script>
-
-
-<h1>TODO APP</h1>
-{#if tasks}
-    <table>
-        <thead>
-            <tr>
-                <th>Task Id</th>
-                <th>Task name</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            {#each tasks as task}
-                <tr>
-                    <td>{task.id}</td>
-                    <td>{task.name}</td>
-                    <td>{task.description}</td>
-
-
-                </tr>
+<div class="flex p-2 gap-2">
+    <div class="container p-5 h-full w-1/2 border-2 border-solid border-primary-950 rounded-lg">
+        <h2 class="text-center text-primary-500 text-5xl">Tasks</h2>
+        <hr class="hr my-2">
+        <Tabs defaultValue="{tasks[1].name}" orientation="vertical" class="">
+            <Tabs.List>
+                {#each tasks as task }
+                
+                    <Tabs.Trigger value={task.name} class="justify-start">{task.name}</Tabs.Trigger>
+                    
+                {/each}
+                <Tabs.Indicator />
+            </Tabs.List>
+            {#each tasks as task }
+                    <Tabs.Content value={task.name}>  
+                                {task.content}
+                    </Tabs.Content>       
             {/each}
-        </tbody>
-    </table>
-{:else}
-    <h1>There is no task</h1>
-{/if}
+    
+    </Tabs>
+   
+    </div>
+    <div class="container p-5 h-full w-1/2 border-2 border-solid border-primary-950 rounded-lg">
+        <h2 class="text-center text-primary-500 text-5xl">Add a task</h2>
+        <p class="text-center text-primary-500">{new_task}</p>
+        <hr class="hr my-2">
+        <small>task name:</small>
+        <input type="text"  bind:value={new_task}>
 
-
-<p>task name {user_in}</p>
-<input type="text" bind:value={user_in} class="border-2 border-solid">
-
+    </div>
+</div>
